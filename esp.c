@@ -42,13 +42,13 @@ void main(void) {
     while(RCIF==0);
     lcd_text("esp connected!!!");
     __delay_ms(1000);
-    uart_send("AT\r\n");
+    uart_send("AT\r\n");          //Sending ATtention commands.
     __delay_ms(1000);
     /*uart_send("AT+CWMODE?\r\n");
     __delay_ms(1000);*/
     uart_send("AT+CWQAP\r\n");
     __delay_ms(1000);
-    uart_send("AT+CWJAP=\"DESKTOP\",\"1234567890\"\r\n");
+    uart_send("AT+CWJAP=\"DESKTOP\",\"1234567890\"\r\n");        //connecting with hotspot named desktop and pass-1234567890
     __delay_ms(1000);
     uart_send("AT+CIFSR\r\n");
     __delay_ms(5000);
@@ -62,12 +62,12 @@ void main(void) {
         lcd_text(Temp);
         lcd_data(39);
         lcd_data('C');
-        uart_send("AT+CIPSTART=\"TCP\",\"184.106.153.149\",80\r\n");
+        uart_send("AT+CIPSTART=\"TCP\",\"184.106.153.149\",80\r\n");      //ip address of thingspeak server = 184.106.153.149
         __delay_ms(1000);
         uart_send("AT+CIPSEND=54\r\n");
         __delay_ms(1000);
         //while(uart_recv()!='>');
-        uart_send("GET /update?api_key=DSJR3CGC6TD2OL3X&field1=");
+        uart_send("GET /update?api_key=DSJR3CGC6TD2OL3X&field1="); //sending to thingspeak channel
         uart_send(Temp);
         uart_send("\r\n");
         __delay_ms(4000);
@@ -108,7 +108,7 @@ unsigned int adc_read(unsigned char channel){
     while(ADCON0bits.DONE == 1);
     return ((ADRESH<<8)+ADRESL);
 }
-void adc_init(){
+void adc_init(){                    //to initialise A to D converter
     ADCON1=0x00;
     ADCON0=0x00;
     ADCON2=0xB2;
